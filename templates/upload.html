@@ -1,0 +1,98 @@
+{% set currentpage = 'UPLOAD' %}
+{% extends "base.html" %}
+{% block title %}Upload{% endblock %}
+{% block mainblock %}
+
+<!-- Need this for offset the sidebar-->
+<div class="row pt-md-5 ml-md-3 mt-md-3 mb-5">
+   <div class="col-xl-6 col-sm-6 p-2">
+      <div class="card card-common">
+         <div class="card-header">
+            <h2>Upload recordings</h2>
+         </div>
+         <div class="card-body">
+            <form id="uploadForm" action="/dummy" method="post" enctype="multipart/form-data"  onsubmit="return false">
+               <!-- Start of upload file field -->
+               <p>Upload CSV file</p>
+               With data type of: 
+               <select id="datatype" name="datatype">
+                  <option value="user">Users</option>
+                  <option value="staycation">Staycation</option>
+                  <option value="booking">Booking</option>
+               </select>
+               <br>
+               <input id="file" name="file" type="file">
+               <br>
+               <!-- End of upload file field -->
+
+               <br>
+               <button type="submit">Upload</button>
+
+               <br><br>  
+               <!-- Start of upload result field  -->
+               <p id="error" style="color:red;"></p> 
+               <p id="output" style="color:green;"></p>  
+                <!--  End of upload result field -->
+           </form>
+         </div>
+      </div>
+   </div>
+</div>
+<!-- end of side bar offset -->
+
+<script type="text/javascript">
+$('button').click(function(){
+	document.getElementById("output").innerHTML = '';
+   document.getElementById("error").innerHTML = '';
+   
+   // if the file input not empty,
+   if (!($('#file')[0].files.length === 0)){
+      var out = '';
+      var err = '';
+      var datatype = $("#datatype").val();
+      var formData = new FormData($('#uploadForm')[0]);
+
+      if (datatype === 'user'){
+         var url = '/up_user'  ; 
+      } else if (datatype === 'staycation') {
+         var url = '/up_staycation';  
+      } else {
+         var url = '/up_booking';
+      }
+
+      $.ajax({
+         url:url,
+         type: "POST",
+         data: formData,
+         async: true,
+         cashe: false,
+         contentType:false,
+         processData:false,
+         success:function (response) {
+            if (response['status'] === 'OK'){
+               for (var i=0; i<response['message'].length; i++ ){
+                  if (response['message'][i].includes('Missing') || response['message'][i].includes('existing')){
+                     err += response['message'][i] + '<br>';
+                  } else {
+                     out += response['message'][i] + '<br>';
+                  }
+               }
+               document.getElementById("output").innerHTML = out;
+               document.getElementById("error").innerHTML = err;
+            } else {
+               for (var i=0; i<response['message'].length; i++ ){
+                  err += response['message'][i] + '<br>';
+               }
+               document.getElementById("error").innerHTML = err;
+            }
+      　　}, 
+      　　error: function (response) { 
+               document.getElementById("error").innerHTML = 'Upload failed!';
+   　 　 }
+      });
+   } else {
+      document.getElementById("error").innerHTML = 'Please select a file to upload';
+   }
+});
+</script>
+{% endblock %}

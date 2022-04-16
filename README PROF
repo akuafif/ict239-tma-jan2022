@@ -1,0 +1,33 @@
+This is question 2 TMA
+I have written 2 bash scripts (setup.sh & start.sh) to automate the creation of venv for q2.
+
+# Setting up the enviroment
+Please run the setup.sh
+
+# To run the flask app
+run start.sh
+
+# Notable Locations
+## AJAX
+- File upload (templates/upload.html)
+- Dashboard (templates/dashboard.html)
+- Booking (templates/viewpackage.html)
+
+## Python def returning JSON for AJAX
+- File upload (models.admin) (blueprints/admin.py)
+- Dashboard (models.admin) (blueprints/admin.py)
+- Booking (models.package) (blueprints/package.py)
+
+## Chart.js 
+- dashboard (templates.dashboard.html)
+
+## Jinga usage
+- All HTML templates, except 404
+
+## Jinga Marco flask form (_render_field.html)
+- register.html 
+- login.html
+
+## Cookies
+- Remember Me upon login/register (models.auth) (blueprints/auth.py)
+- COOKIE_TIME_OUT (__init__.py) 
