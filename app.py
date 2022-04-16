@@ -1,6 +1,5 @@
-from flask_login import login_required, current_user
 import os
-from flask import render_template, request, redirect, send_from_directory
+from flask import render_template, send_from_directory
 from app import app, db, login_manager
 
 from models.user import User
@@ -24,10 +23,6 @@ def favicon():
 def base():
     return render_template('base.html')
 
-@app.route('/layout_test')
-def content_layout():
-    return render_template('_test_content_layout.html')
- 
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404

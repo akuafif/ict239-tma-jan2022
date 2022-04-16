@@ -1,9 +1,8 @@
-from flask import Blueprint, request, redirect, render_template, url_for, flash, render_template, jsonify
+from flask import Blueprint, request, redirect, render_template, url_for, jsonify
 from flask_login import login_required, current_user
 from werkzeug.security import generate_password_hash
 
 # file upload operation related imports
-import os
 from werkzeug.utils import secure_filename
 import pandas as pd
 from models.user import User
@@ -38,7 +37,6 @@ def up_user():
     if current_user.email != 'admin@abc.com':
         return jsonify({'status' : 'ERROR', 
                         'message' : ['Not Allowed! User is not admin!']})
-    
     upload_result = []
     f = request.files['file']
     headers = ['email','password','name'] 
@@ -95,14 +93,12 @@ def up_staycation():
                     'filename': f'{f.filename}',
                     'message' : upload_result})
 
-
 @admin.route('/up_booking', methods=['POST'])
 @login_required
 def up_booking():
     if current_user.email != 'admin@abc.com':
         return jsonify({'status' : 'ERROR', 
-                        'message' : ['Not Allowed! User is not admin!']})
-                    
+                        'message' : ['Not Allowed! User is not admin!']})         
     upload_result = []
     f = request.files['file']
     headers = ['check_in_date','customer','hotel_name']
