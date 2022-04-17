@@ -1,4 +1,4 @@
-This is question 2 TMA
+This is question 1 TMA
 I have written 2 bash scripts (setup.sh & start.sh) to automate the creation of venv for q2.
 
 # Setting up the enviroment
@@ -7,27 +7,28 @@ Please run the setup.sh
 # To run the flask app
 run start.sh
 
-# Notable Locations
-## AJAX
-- File upload (templates/upload.html)
-- Dashboard (templates/dashboard.html)
-- Booking (templates/viewpackage.html)
+Please register first with "admin@abc.com".
 
-## Python def returning JSON for AJAX
-- File upload (models.admin) (blueprints/admin.py)
-- Dashboard (models.admin) (blueprints/admin.py)
-- Booking (models.package) (blueprints/package.py)
+###############################
+# Q1 description
+html templates:
+- _render_field.html, Jinga marco
+- base.html, base layout
+- login.html, login page
+- register.html, register page
+- viewallpackages.html, view all packages page and home page for all accounts
+- viewpackage.html, to view and book a package
 
-## Chart.js 
-- dashboard (templates.dashboard.html)
+blueprints folder:
+- auth.py, routes for authentication related 
+- package.py, routes for package related
 
-## Jinga usage
-- All HTML templates, except 404
+models folder:
+- user.py, User model class
+- hotels.py, Hotel model class
 
-## Jinga Marco flask form (_render_field.html)
-- register.html 
-- login.html
+MongoDB:
+- Only User collection in MongoDB is used
 
-## Cookies
-- Remember Me upon login/register (models.auth) (blueprints/auth.py)
-- COOKIE_TIME_OUT (__init__.py) 
+js assets:
+- dtsel.js, datepicker js library

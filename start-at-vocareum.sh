@@ -4,8 +4,8 @@ nohup /opt/suss/mongodbfiles/manualMongo.sh >> /dev/null &
 
 echo ""
 echo "Activating virtual environment..."
-echo ". q2venv/bin/activate"
-. q2venv/bin/activate
+echo ". q1venv/bin/activate"
+. q1venv/bin/activate
 
 echo ""
 echo "Setting up enviroment variables..."

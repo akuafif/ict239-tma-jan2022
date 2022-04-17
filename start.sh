@@ -1,4 +1,4 @@
-. q2venv/bin/activate
+. q1venv/bin/activate
 export FLASK_APP=app.py
 export PYTHONPATH=.
 export FLASH_ENV=development

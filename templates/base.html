@@ -15,25 +15,27 @@
     <!-- navbar -->
     <nav class="navbar navbar-expand-md navbar-light">
       <button class="navbar-toggler ml-auto mb-2 bg-light" type="button" data-toggle="collapse" data-target="#myNavbar">
-        <span class="navbar-toggler-icon"></span>
+        <!-- Hamburger icon for mobile devices -->
+        <span class="navbar-toggler-icon"></span> 
       </button>
       <div class="collapse navbar-collapse" id="myNavbar">
         <div class="container-fluid">
           <div class="row">
-            <!-- sidebar -->
+            <!-- Start of Sidebar -->
             <div class="col-xl-2 col-lg-3 col-md-4 sidebar fixed-top">
+              <!-- Sidebar title -->
               <a href="/" class="navbar-brand text-white d-block mx-auto text-center py-3 mb-4 bottom-border">Staycation Portal</a>
 
-              <!-- User name holder -->
+              <!-- User name div -->
               {% if current_user.is_authenticated %}
               <div class="bottom-border pb-3">
                 <img src=" {{ url_for('static', filename='img/admin.jpeg')}} " width="50" class="rounded-circle mr-3">
                 <a href="/" class="text-white">{{ current_user.name }}</a>
               </div>
+              <!-- End of User name div -->
+
               {% endif %}
               <ul class="navbar-nav flex-column mt-4">
-               <!-- <li class="nav-item"><a href="#" class="nav-link text-white p-3 mb-2 current"><i class="fas fa-home text-light fa-lg mr-3"></i>Dashboard</a></li> -->
-
                 <!-- If Not authenticated -->
                 {% if current_user.is_anonymous %}
                 <li class="nav-item"><a href="{{ url_for('auth.login') }}" class="nav-link text-white p-3 mb-2 sidebar-link"><i class="fas fa-home text-light fa-lg mr-3"></i>Login</a></li>
@@ -49,15 +51,15 @@
 
                 <!-- If Admin -->
                 {% if current_user.email == 'admin@abc.com' %}
-                <li class="nav-item"><a href="{{ url_for('admin.chart') }}" class="nav-link text-white p-3 mb-2 sidebar-link"><i class="fas fa-chart-area text-light fa-lg mr-3"></i>Dashboard</a></li>
-                <li class="nav-item"><a href="{{ url_for('admin.upload') }}" class="nav-link text-white p-3 mb-2 sidebar-link"><i class="fas fa-upload text-light fa-lg mr-3"></i>Upload</a></li>
+                <li class="nav-item"><a href="{{ url_for('q2placeholder') }}" class="nav-link text-white p-3 mb-2 sidebar-link"><i class="fas fa-chart-area text-light fa-lg mr-3"></i>Dashboard</a></li>
+                <li class="nav-item"><a href="{{ url_for('q2placeholder') }}" class="nav-link text-white p-3 mb-2 sidebar-link"><i class="fas fa-upload text-light fa-lg mr-3"></i>Upload</a></li>
                 {% endif %}
                 <!-- End if -->
               </ul>
             </div>
-            <!-- end of sidebar -->
+            <!-- End of Sidebar -->
 
-            <!-- top-nav -->
+            <!-- Start of top-nav -->
             <div class="col-xl-10 col-lg-9 col-md-8 ml-auto top-navbar fixed-top py-2" id="top-navbar">
               <div class="row align-items-center">
                 <div class="col-md-6">
@@ -73,12 +75,12 @@
                 </div>
               </div>
             </div>
-            <!-- end of top-nav -->
+            <!-- End of top-nav -->
           </div>
         </div>
       </div>
     </nav>
-    <!-- end of navbar -->
+    <!-- End of navbar -->
 
     <!-- modal -->
     <div class="modal fade" id="sign-out">
@@ -94,14 +96,13 @@
           <div class="modal-footer">
             <button type="button" class="btn btn-success" data-dismiss="modal">Stay Here</button>
             <a href="/logout" class="btn btn-danger" role="button">Logout</a>
-            <!-- <button type="button" class="btn btn-danger" data-dismiss="modal">Logout</button> -->
           </div>
         </div>
       </div>
     </div>
-    <!-- end of modal -->
+    <!-- End of modal -->
 
-    <!-- cards -->
+    <!-- Container -->
     <section>
       <div class="container-fluid">
         <div class="row">
@@ -111,8 +112,10 @@
           </div>
         </div>
       </div>
-  </section>
-    <!-- end of cards -->
+    </section>
+    <!-- End of Container -->
+
+    <!-- Ajax and Bootstrap js import -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
   </body>
