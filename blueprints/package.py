@@ -32,7 +32,7 @@ def viewpackage():
     # retrive the hotel name from url query string
     hotel_name = request.args.get("hotel")
     hotel_csv = pd.read_csv('assets/js/staycation.csv')
-    selected_hotel = hotel_csv[hotel_csv['hotel_name'].str.contains(hotel_name)]
+    selected_hotel = hotel_csv[hotel_csv['hotel_name'] == hotel_name]
 
     if selected_hotel.empty:
         return render_template('viewpackage.html',
