@@ -1,9 +1,11 @@
 <!-- templates/viewpackage.html -->
+{% set currentpage = hotel_name %}
 {% extends "base.html" %}
 {% block title %}{{ hotel_name }}{% endblock %}
 {% block head %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/dtsel.css')}}">
 <script src="{{ url_for('static', filename='js/dtsel.js')}}"></script>
+<script src="{{ url_for('static', filename='js/moment.js')}}"></script>
 {% endblock %}
 {% block mainblock %}
 <!-- Need this for offset the sidebar-->
@@ -54,7 +56,8 @@
 <script type="text/javascript">
     instance = new dtsel.DTS('input[name="checkindate"]',  {
         dateFormat: "dd-mm-yyyy",}
-    );
+	);
+	document.getElementById('checkindate').value = moment().format('DD-MM-yyyy');
 </script>
 <script type="text/javascript">
 $('button').click(function(){

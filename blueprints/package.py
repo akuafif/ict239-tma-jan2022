@@ -24,7 +24,6 @@ def viewallpackages():
                                 image_url=image_url,
                                 description=description))
     return render_template('viewallpackages.html', 
-                            name=current_user.name, 
                             hotel_list=hotel_list)
 
 @package.route('/view', methods=['GET'])
@@ -37,14 +36,10 @@ def viewpackage():
 
     if selected_hotel.empty:
         return render_template('viewpackage.html',
-                            name=current_user.name,  
-                            currentpage="Invalid Hotel",
                             hotel_name="Invalid Hotel",
                             description="Invalid Hotel",
                             image_url="https://fscene8.me/content/images/size/w1000/2022/04/question-mark-1019820_1280-1-.jpg")
     return render_template('viewpackage.html', 
-                            name=current_user.name, 
-                            currentpage=selected_hotel.iloc[0][0], 
                             hotel_name=selected_hotel.iloc[0][0],
                             description=selected_hotel.iloc[0][4],
                             image_url=selected_hotel.iloc[0][3])

@@ -65,7 +65,7 @@ def register():
             existing_user = User.objects(email=form.email.data).first()
             if existing_user is None:
                 hashpass = generate_password_hash(form.password.data, method='sha256')
-                new_user = User(email=form.email.data,password=hashpass, name=form.name.data).save()
+                new_user = User(email=form.email.data,password=hashpass).save()
 
                 #print('Remember user:', request.form.get('checkbox'))
                 resp = make_response(redirect(url_for('package.viewallpackages')))
