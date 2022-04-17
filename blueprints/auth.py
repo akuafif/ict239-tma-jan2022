@@ -7,7 +7,7 @@ from app import COOKIE_TIME_OUT
 
 auth = Blueprint('auth', __name__)
 
-# Using encryption instead of hashing for password cookie
+# Using xor encryption for password cookie
 XOR_KEY = '1@3_FGSGA9gsg88SS02b8gsgs83RNS8gsgk9'
 def sxor(pwd): 
     key = ''.join(XOR_KEY[i] for i in range(len(pwd)+1))   
@@ -30,7 +30,6 @@ def login():
             check_user = User.objects(email=form.email.data).first()
             if check_user:
                 if check_password_hash(check_user['password'], form.password.data):
-                    #print('Remember user:', request.form.get('checkbox'))
                     resp = make_response(redirect(url_for('package.viewallpackages')))
 
                     # Save details to cookies
@@ -67,9 +66,7 @@ def register():
                 hashpass = generate_password_hash(form.password.data, method='sha256')
                 new_user = User(email=form.email.data,password=hashpass).save()
 
-                #print('Remember user:', request.form.get('checkbox'))
                 resp = make_response(redirect(url_for('package.viewallpackages')))
-
                 # Save details to cookies
                 if request.form.get('checkbox') is not None:
                     resp.set_cookie('email', new_user['email'], max_age=COOKIE_TIME_OUT)

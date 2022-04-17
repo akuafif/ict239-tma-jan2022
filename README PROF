@@ -1,5 +1,5 @@
 This is question 1 TMA
-I have written 2 bash scripts (setup.sh & start.sh) to automate the creation of venv for q2.
+I have written 2 bash scripts (setup.sh & start.sh) to automate the creation of venv for q1.
 
 # Setting up the enviroment
 Please run the setup.sh
@@ -32,3 +32,4 @@ MongoDB:
 
 js assets:
 - dtsel.js, datepicker js library
+- moment.js, date format js library

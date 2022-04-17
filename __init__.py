@@ -1,7 +1,6 @@
 from flask import Flask
 from flask_mongoengine import MongoEngine
 from flask_login import LoginManager
-#import os
  
 def create_app():
     app = Flask(__name__)
@@ -22,4 +21,3 @@ def create_app():
     return app, db, login_manager, COOKIE_TIME_OUT
 
 app, db, login_manager, COOKIE_TIME_OUT = create_app()
-
