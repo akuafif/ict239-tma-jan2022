@@ -15,10 +15,9 @@ pip install -r requirement.txt
 echo ""
 chmod +x ./start.sh
 while true; do
-    read -p "Setup completed. Do you wish to run the start.sh? [Y/N] " yn
-    case $yn in
-        [Yy]* ) ./start.sh; break;;
+    read -p "Setup completed. Do you wish to run the start.sh? [Y/n] " n
+    case $n in
         [Nn]* ) exit;;
-        * ) echo "Please answer yes or no.";; 
+        * ) ./start.sh; break;;
     esac
 done

@@ -1,6 +1,7 @@
 <!-- templates/viewpackage.html -->
+{% set currentpage = hotel_name %}
 {% extends "base.html" %}
-{% block title %}{{ selected_hotel.hotel_name }}{% endblock %}
+{% block title %}{{ hotel_name }}{% endblock %}
 {% block head %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/dtsel.css')}}">
 <script src="{{ url_for('static', filename='js/dtsel.js')}}"></script>
@@ -11,20 +12,20 @@
     <!-- Start of package view field -->
     <div class="col-sm-6 col-lg-4 mb-3">
         <div class="card mb-3">
-            <svg class="bd-placeholder-img card-img-top" width="100%" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: {{ selected_hotel.hotel_name }}" focusable="false">
-                <title>{{ selected_hotel.hotel_name }}</title>
-                <image class="bd-placeholder-img card-img-top" xlink:href="{{ selected_hotel.image_url }}" style="border: none; width: 100%;height: 100%;" alt="{{ selected_hotel.hotel_name }}"></image>
+            <svg class="bd-placeholder-img card-img-top" width="100%" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: {{ hotel_name }}" focusable="false">
+                <title>{{ hotel_name }}</title>
+                <image class="bd-placeholder-img card-img-top" xlink:href="{{ image_url }}" style="border: none; width: 100%;height: 100%;" alt="{{ hotel_name }}"></image>
             </svg>
         <div class="card-body">
-            <h5 class="card-title">{{ selected_hotel.hotel_name }}</h5>
-            <p class="card-text">{{ selected_hotel.description }}</p>
+            <h5 class="card-title">{{ hotel_name }}</h5>
+            <p class="card-text">{{ description }}</p>
         </div>
         </div>
     </div>
     <!-- End of package view field -->
     
 	<!-- Start of booking card field -->
-	{% if selected_hotel.hotel_name != 'Invalid Hotel' %}
+	{% if hotel_name != 'Invalid Hotel' %}
     <div class="col-sm-6 col-lg-4 mb-3">
         <div class="card mb-3">
             <div class="card-header">

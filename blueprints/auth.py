@@ -89,5 +89,4 @@ def register():
 @login_required
 def logout():
     logout_user()
-    #print('logout', current_user, current_user.is_authenticated)
     return redirect(url_for('auth.login')) 

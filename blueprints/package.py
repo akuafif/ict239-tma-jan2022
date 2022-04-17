@@ -8,25 +8,27 @@ package = Blueprint('package', __name__)
 @login_required
 def viewallpackages():
     # Home page of all authenticated users
-    return render_template('viewallpackages.html', name=current_user.name, hotel_list = Hotel.objects)
+    return render_template('viewallpackages.html', hotel_list = Hotel.objects)
 
 from datetime import datetime, timedelta
 from models.booking import Booking
 @package.route('/view', methods=['GET'])
 @login_required
 def viewpackage():
-    # 1. retrive the hotel name from url query string
-    # 2. validate and do not allow book past dates
-    # 3. check for existing booking with date,customer,hotelname
-    # 4. if false, create booking object and save to db
+    # retrive the hotel name from url query string
     
     hotel_name = request.args.get("hotel")
     selected_hotel = Hotel.objects(hotel_name=hotel_name).first()
     existing_user = User.objects(email=current_user.email).first()
     
     if selected_hotel is None:
-        selected_hotel = Hotel(hotel_name="Invalid Hotel",description="Invalid Hotel",image_url="https://fscene8.me/content/images/size/w1000/2022/04/question-mark-1019820_1280-1-.jpg")
-    return render_template('viewpackage.html', name=current_user.name, currentpage=hotel_name, selected_hotel=selected_hotel)
+        selected_hotel = Hotel(hotel_name="Invalid Hotel",
+                               description="Invalid Hotel",
+                               image_url="https://fscene8.me/content/images/size/w1000/2022/04/question-mark-1019820_1280-1-.jpg")
+    return render_template('viewpackage.html', 
+                            hotel_name=hotel_name, 
+                            image_url=selected_hotel.image_url, 
+                            description=selected_hotel.description)
 
 from flask import jsonify
 @package.route('/addbooking', methods=['POST'])
