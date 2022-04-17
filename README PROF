@@ -9,6 +9,9 @@ run start.sh
 
 Please register first with "admin@abc.com".
 
+
+
+
 ###############################
 # Q1 description
 html templates:
@@ -33,3 +36,19 @@ MongoDB:
 js assets:
 - dtsel.js, datepicker js library
 - moment.js, date format js library
+
+## Jinga usage
+- All HTML templates
+
+## Jinga Marco flask form (_render_field.html)
+- register.html 
+- login.html
+
+## Cookies
+- Remember Me upon login/register (models.auth) (blueprints/auth.py)
+- COOKIE_TIME_OUT (__init__.py) 
+
+
+
+
+
