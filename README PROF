@@ -7,13 +7,21 @@ Please run the setup.sh
 # To run the flask app
 run start.sh
 
+Please register first with "admin@abc.com".
+
+
+
+
+###############################
+# Q2 description
 # Notable Locations
+
 ## AJAX
 - File upload (templates/upload.html)
 - Dashboard (templates/dashboard.html)
 - Booking (templates/viewpackage.html)
 
-## Python def returning JSON for AJAX
+## Python returning JSON for AJAX
 - File upload (models.admin) (blueprints/admin.py)
 - Dashboard (models.admin) (blueprints/admin.py)
 - Booking (models.package) (blueprints/package.py)
@@ -22,7 +30,7 @@ run start.sh
 - dashboard (templates.dashboard.html)
 
 ## Jinga usage
-- All HTML templates, except 404
+- All HTML templates
 
 ## Jinga Marco flask form (_render_field.html)
 - register.html 

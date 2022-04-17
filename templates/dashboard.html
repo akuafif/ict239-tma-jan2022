@@ -4,7 +4,6 @@
 {% block title %}Dashboard{% endblock %}
 {% block head %} 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<!--<script src="{{ url_for('static', filename='js/plot-dashboard.js')}}"> </script>-->
 <link rel="stylesheet" href="{{ url_for('static', filename='css/dtsel.css')}}">
 <script src="{{ url_for('static', filename='js/dtsel.js')}}"></script>
 <script>
@@ -66,7 +65,7 @@ function getDateObject(date){
 }
 
 function updateChart(date_labels, hotel_label, income_dict){
-    // Update chart without reloading! :)
+    // Update chart without reloading
     datasets = []
     for (let i = 0; i < hotel_label.length; i++) {
         datasets.push({ 
@@ -79,7 +78,6 @@ function updateChart(date_labels, hotel_label, income_dict){
     myChart.data.labels = date_labels;
     myChart.data.datasets = datasets;
     myChart.update();
-
 }
 
 function getRndInteger(max) {
@@ -89,9 +87,9 @@ function getRndInteger(max) {
 </script>
 {% endblock %}
 {% block mainblock %}
-
 <!-- Need this for offset the sidebar-->
 <div class="row row-cols-1 row-cols-md-3 g-4 ml-auto">
+    <!-- Start of Select Date Range card -->
     <div class="col-xl-14 col-sm-12 p-4">
        <div class="card card-common">
             <div class="card-header">
@@ -111,7 +109,8 @@ function getRndInteger(max) {
             </div>  
         </div>
     </div>
-
+    <!-- End of Select Date Range card-->
+    <!-- Start of Chart card -->
     <div class="col-xl-14 col-sm-12 p-4">
         <div class="card card-common">
             <div class="card-header">
@@ -123,6 +122,7 @@ function getRndInteger(max) {
             </div>
         </div>
     </div>
+    <!-- End of Chart card -->
 </div>  
 <!-- end of side bar offset -->
 <script>
@@ -142,11 +142,11 @@ function getRndInteger(max) {
 </script>
 
 <script type="text/javascript">
-// Submit Button click
+// Submit Button to update the chart data
 $('button').click(function(){
     // clear the output error field
-	document.getElementById("output").innerHTML = '';
-    document.getElementById("error").innerHTML = '';
+	document.getElementById("output").innerHTML = ''; // Show total days in range
+    document.getElementById("error").innerHTML = ''; // for error output
     
     // get dates and prepare to validate them
     var fromdate = document.getElementById('fromdate').value

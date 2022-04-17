@@ -1,5 +1,7 @@
 from flask import Blueprint, request, render_template
 from flask_login import login_required, current_user
+from datetime import datetime, timedelta
+from models.booking import Booking
 from models.hotel import Hotel
 from models.user import User
 package = Blueprint('package', __name__)
@@ -10,16 +12,12 @@ def viewallpackages():
     # Home page of all authenticated users
     return render_template('viewallpackages.html', hotel_list = Hotel.objects)
 
-from datetime import datetime, timedelta
-from models.booking import Booking
 @package.route('/view', methods=['GET'])
 @login_required
 def viewpackage():
     # retrive the hotel name from url query string
-    
     hotel_name = request.args.get("hotel")
     selected_hotel = Hotel.objects(hotel_name=hotel_name).first()
-    existing_user = User.objects(email=current_user.email).first()
     if selected_hotel is None:
         selected_hotel = Hotel(hotel_name="Invalid Hotel",
                                description="Invalid Hotel",
