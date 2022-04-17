@@ -132,40 +132,39 @@ def chart():
     return redirect(url_for('auth.login')) 
    
 def generateIncomeInRange(data):
-    # To geneate a dictionary for the dataset
-    # format -> { hotel_name: [fromDate, ... , toDate] }
-    # value  -> {"Shangri-La Singapore" : [300, ... , 0] }
-    
-    # Generate a date list to get the length of the x-axis
+    # To geneate a dictionary for the dataset    
+    # Generate a date object 
     d,m,y = str(data['fromdate']).split('-')
     fromDate = datetime(year=int(y),month=int(m),day=int(d))
     d,m,y = str(data['todate']).split('-')
     toDate = datetime(year=int(y),month=int(m),day=int(d))
     gap = toDate - fromDate
-    date_list = [fromDate + timedelta(days=x) for x in range(gap.days+1)]
 
-    # x-axis
-    # change to yyyy-mm-dd string for dates labels on x-axis, as per TMA figure example
-    date_labels = [d.strftime("%Y-%m-%d") for d in date_list]
-
-    # Generate Legends label
-    hotel_label = []
-    for hotel in Hotel.objects:
-        hotel_label.append(hotel.hotel_name)
-
-    # Create a dictionary (dataset)
-    income_dict = {}
-    for h in hotel_label:
-        # put 0 as default value
-        income_dict[h] = [0 for d in date_list]
-
-    for hotel in hotel_label:
-        h = Hotel.objects(hotel_name=hotel).first()
-        for book in Booking.objects(hotel_name=h.id):
+    # Create containers to pass to chart js
+    date_labels = [] # x-axis
+    hotel_label = [] # legend
+    income_label = {} # legend x-axis
+    income_dict = {} # legend y-axis
+    for h in Hotel.objects:
+        # Sort the bookings by date
+        for book in Booking.objects(hotel_name=h.id).order_by('check_in_date'):
             if toDate >= book.check_in_date >= fromDate: 
-                date_index = date_list.index(book.check_in_date)
-                income_dict[hotel][date_index] += h.unit_cost 
-    return hotel_label, date_labels, income_dict, gap
+                date_str = book.check_in_date.strftime("%Y-%m-%d")
+                if not h.hotel_name in hotel_label:
+                    hotel_label.append(h.hotel_name)
+                    income_label[h.hotel_name] = []
+                    income_dict[h.hotel_name] = []
+                if date_str not in date_labels:
+                    date_labels.append(date_str)
+                if date_str not in income_label[h.hotel_name]:
+                    income_label[h.hotel_name].append(date_str)
+                    income_dict[h.hotel_name].append(h.unit_cost)
+                else:
+                    # add the income to existing date
+                    index = income_label[h.hotel_name].index(date_str)
+                    income_dict[h.hotel_name][index] += h.unit_cost
+    date_labels.sort()
+    return hotel_label, date_labels, income_dict, income_label, gap
     
 @admin.route('/get_chart_data', methods=['GET', 'POST'])
 @login_required    
@@ -176,10 +175,11 @@ def get_chart_data():
 
     # Generate the required variables for chart js
     data = request.get_json()
-    hotel_label, date_labels, income_dict, gap = generateIncomeInRange(data)
+    hotel_label, date_labels, income_dict, income_label, gap = generateIncomeInRange(data)
     return jsonify({'status' : 'OK',
                     'message': f'{data}',
                     'hotel_label' : hotel_label,
                     'date_labels' : date_labels,
                     'income_dict' : income_dict,
+                    'income_label': income_label,
                     'daysrange' : gap.days+1})

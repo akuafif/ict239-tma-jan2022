@@ -17,14 +17,14 @@ Please register first with "admin@abc.com".
 # Notable Locations
 
 ## AJAX
-- File upload (templates/upload.html)
-- Dashboard (templates/dashboard.html)
-- Booking (templates/viewpackage.html)
+- File upload (assets/js/upload.js)
+- Dashboard (assets/js/dashboard.js)
+- Booking (assets/js/viewpackage.js)
 
 ## Python returning JSON for AJAX
-- File upload (models.admin) (blueprints/admin.py)
-- Dashboard (models.admin) (blueprints/admin.py)
-- Booking (models.package) (blueprints/package.py)
+- File upload feature (models.admin) (blueprints/admin.py)
+- Dashboard feature (models.admin) (blueprints/admin.py)
+- Booking feature (models.package) (blueprints/package.py)
 
 ## Chart.js 
 - dashboard (templates.dashboard.html)

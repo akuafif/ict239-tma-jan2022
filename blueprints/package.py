@@ -22,7 +22,7 @@ def viewpackage():
         selected_hotel = Hotel(hotel_name="Invalid Hotel",
                                description="Invalid Hotel",
                                image_url="https://fscene8.me/content/images/size/w1000/2022/04/question-mark-1019820_1280-1-.jpg")
-    return render_template('viewpackage.html', 
+    return render_template('booking.html', 
                             hotel_name=hotel_name, 
                             image_url=selected_hotel.image_url, 
                             description=selected_hotel.description)

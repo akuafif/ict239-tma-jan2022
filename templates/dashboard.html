@@ -3,189 +3,49 @@
 {% extends "base.html" %}
 {% block title %}Dashboard{% endblock %}
 {% block head %} 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
 <link rel="stylesheet" href="{{ url_for('static', filename='css/dtsel.css')}}">
 <script src="{{ url_for('static', filename='js/dtsel.js')}}"></script>
-<script>
-var hotel_label = [];
-var date_labels = [];
-var datasets = []
-
-window.onload = function() {
-    // on load, assign both the date input field and variable to the TMA date
-    var fromdate = document.getElementById('fromdate').value = '17-01-2022';
-    var todate = document.getElementById('todate').value = '12-03-2022';
-    document.getElementById("output").innerHTML = 'Total Days: ' + daysBetween(getDateObject(fromdate), getDateObject(todate));
-
-    $.ajax({
-        type: 'POST',
-        url: "/get_chart_data",
-        data: JSON.stringify({
-            "fromdate": fromdate,
-            "todate": todate
-        }),
-        error: function(e) {;
-            document.getElementById("error").innerHTML = e;
-        },
-        success: function(response){ 
-            date_labels = response['date_labels'];
-            hotel_label = response['hotel_label'];
-            income_dict = response['income_dict'];
-            updateChart(date_labels, hotel_label, income_dict);
-        },
-        dataType: "json",
-        contentType: "application/json"
-    });
-};
-
-// Start of chart object declaration
-const data = {
-    labels: date_labels,
-    datasets: datasets
-};
-
-const config = {
-    type: 'line',
-    data: data,
-    options: {
-        responsive:true,
-        maintainAspectRatio: false
-    }
-};
-// end of chart object declaration
-
-function daysBetween(fromdate, todate){
-    //calculate days difference by dividing total milliseconds in a day
-    return ((todate.getTime() - fromdate.getTime()) / (1000 * 60 * 60 * 24)) + 1;
-}   
-
-function getDateObject(date){
-	var datearray = date.split("-");
-	return new Date(datearray[2]+'-'+datearray[1]+'-'+datearray[0]+' 00:00:00');
-}
-
-function updateChart(date_labels, hotel_label, income_dict){
-    // Update chart without reloading
-    datasets = []
-    for (let i = 0; i < hotel_label.length; i++) {
-        datasets.push({ 
-            label:hotel_label[i],
-            backgroundColor: 'rgb(255,255,255)',
-            borderColor: 'rgb('+ getRndInteger(255) + ','+ getRndInteger(255)+','+getRndInteger(255)+')',
-            data: income_dict[hotel_label[i]]
-        });
-    };
-    myChart.data.labels = date_labels;
-    myChart.data.datasets = datasets;
-    myChart.update();
-}
-
-function getRndInteger(max) {
-    // to give random colors to the chart legends
-    return Math.floor(Math.random() * max) + 1;
-}
-</script>
+<script src="{{ url_for('static', filename='js/moment.js')}}"></script>
 {% endblock %}
 {% block mainblock %}
 <!-- Need this for offset the sidebar-->
 <div class="row row-cols-1 row-cols-md-3 g-4 ml-auto">
     <!-- Start of Select Date Range card -->
     <div class="col-xl-14 col-sm-12 p-4">
-       <div class="card card-common">
-            <div class="card-header">
-                <h2>Select Date Range</h2>
-            </div>
-            <div class="card-body">
-                <form action="/get_chart_data" method="post" onsubmit='return false'>
-                    <!-- Start of date picker -->
-                    Range: <input name="fromdate" id="fromdate" value="{{ startdate }}"/>
-                    - <input name="todate" id="todate" value="{{ enddate }}"/>
-                    <button type="submit" class="btn btn-primary", value="submit">Submit</button>
-                    <!-- end of date picker -->
+			<div class="card card-common">
+				<div class="card-header">
+					<h2>Select Date Range</h2>
+				</div>
+				<div class="card-body">
+					<form action="/get_chart_data" method="post" onsubmit='return false'>
+						<!-- Start of date picker -->
+						Range: <input name="fromdate" id="fromdate" value="{{ startdate }}"/>
+						- <input name="todate" id="todate" value="{{ enddate }}"/>
+						<button type="submit" class="btn btn-primary", value="submit">Submit</button>
+						<!-- end of date picker -->
 
-                    <p id="error" style="color:red;"></p> 
-                    <p id="output" style="color:black;"></p>   
-                </form>
-            </div>  
-        </div>
+						<p id="error" style="color:red;"></p> 
+						<p id="output" style="color:black;"></p>   
+					</form>
+				</div>  
+			</div>
     </div>
     <!-- End of Select Date Range card-->
     <!-- Start of Chart card -->
     <div class="col-xl-14 col-sm-12 p-4">
-        <div class="card card-common">
-            <div class="card-header">
-                <h2>Package Incoming</h2>
-            </div>
-        <div class="card-body chart-container">
-            <div style="height: 500px">
-                <canvas id="myChart"></canvas>
-            </div>
-        </div>
+			<div class="card card-common">
+				<div class="card-header">
+					<h2>Package Incoming</h2>
+				</div>
+			<div class="card-body chart-container">
+				<div style="height: 500px">
+					<canvas id="myChart"></canvas>
+				</div>
+			</div>
     </div>
     <!-- End of Chart card -->
 </div>  
 <!-- end of side bar offset -->
-<script>
-    // date picker object
-    fromDate = new dtsel.DTS('input[name="fromdate"]',  {
-        dateFormat: "dd-mm-yyyy",}
-    );
-    todate = new dtsel.DTS('input[name="todate"]',  {
-        dateFormat: "dd-mm-yyyy",}
-    );
-
-    // char object
-    const myChart = new Chart(
-      document.getElementById('myChart'),
-      config
-    );
-</script>
-
-<script type="text/javascript">
-// Submit Button to update the chart data
-$('button').click(function(){
-    // clear the output error field
-	document.getElementById("output").innerHTML = ''; // Show total days in range
-    document.getElementById("error").innerHTML = ''; // for error output
-    
-    // get dates and prepare to validate them
-    var fromdate = document.getElementById('fromdate').value
-    var todate = document.getElementById('todate').value
-	var fromdate_date = getDateObject(fromdate);
-    var todate_date = getDateObject(todate);
-    document.getElementById("output").innerHTML = 'Total Days: ' + daysBetween(fromdate_date, todate_date);
-
-    // if todate is later than fromdate and both date are in 'dd-mm-yyyy' format
-    if (fromdate.match(/^(0?[1-9]|[12][0-9]|3[01])[\-](0?[1-9]|1[012])[\/\-]\d{4}$/) &&
-        todate.match(/^(0?[1-9]|[12][0-9]|3[01])[\-](0?[1-9]|1[012])[\/\-]\d{4}$/) &&
-        todate_date > fromdate_date){
-            $.ajax({
-                type: 'POST',
-                url: "/get_chart_data",
-                data: JSON.stringify({
-                    "fromdate": document.getElementById('fromdate').value,
-                    "todate": document.getElementById('todate').value
-		        }),
-                error: function(e) {
-                    document.getElementById("error").innerHTML = e;
-                },
-                dataType: "json",
-                contentType: "application/json",
-                success: function(response){
-                    if (response['status'] === 'OK'){
-                        // update the chart
-                        date_labels = response['date_labels'];
-                        hotel_label = response['hotel_label'];
-                        income_dict = response['income_dict'];
-                        updateChart(date_labels, hotel_label, income_dict);
-                    } else {
-                        document.getElementById("error").innerHTML = response['message'];
-                    }
-                }
-		});
-        } else {
-            document.getElementById("error").innerHTML = 'Error: Invalid date format or range';
-        }
-});
-</script>
+<script src="{{ url_for('static', filename='js/dashboard.js')}}"></script>
 {% endblock %}
