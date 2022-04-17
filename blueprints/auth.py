@@ -35,7 +35,6 @@ def login():
                     # Save details to cookies
                     if request.form.get('checkbox') is not None:
                         resp.set_cookie('email', check_user['email'], max_age=COOKIE_TIME_OUT)
-                        # bitwise to hide pwd in cookie
                         resp.set_cookie('pwd',  sxor(form.password.data), max_age=COOKIE_TIME_OUT) 
                         resp.set_cookie('rem',  "checked", max_age=COOKIE_TIME_OUT)
                     else: 
