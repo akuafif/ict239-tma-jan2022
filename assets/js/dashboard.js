@@ -59,7 +59,6 @@ function getDateObject(date){
 
 function updateChart(date_labels, hotel_label, income_dict, income_label){
     // Update chart without reloading
-    
     datasets = []
     for (let i = 0; i < hotel_label.length; i++) {
         data_xy = [];
@@ -128,7 +127,7 @@ function ajaxUpdateChart(){
                     }
                 }
         });
-        } else {
-            document.getElementById("error").innerHTML = 'Error: Invalid date format or range';
-        }
+    } else {
+        document.getElementById("error").innerHTML = 'Error: Invalid date format or range';
+    }
 }

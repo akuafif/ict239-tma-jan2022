@@ -12,7 +12,6 @@ $('button').click(function(){
 
 	var checkindate = document.getElementById('checkindate').value;
 	var datearray = checkindate.split("-");
-	var checkdate = new Date(datearray[2]+'-'+datearray[1]+'-'+datearray[0]+' 00:00:00');
 	var today = new Date();
 	today.setDate(today.getDate()-1); // comparing yesterday date
 	
