@@ -25,11 +25,6 @@ def upload():
         return render_template('upload.html')
     return redirect(url_for('auth.login')) 
 
-# 1. check if current user is admin
-# 2. if POST, ajax will check file and data type
-# 3. open file with pd, check if headers is valid for the datatype
-#    return error if wrong header for datatype. This requires pandas.
-# 4. for loop the pd object and save each row to db
 @admin.route('/up_user', methods=['POST'])
 @login_required
 def up_user():
