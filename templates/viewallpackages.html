@@ -16,7 +16,9 @@
       <div class="card-body">
         <h5 class="card-title">{{ pkg.hotel_name }}</h5>
         <p class="card-text">{{ pkg.description }}</p>
-       <button type="button" class="btn btn-primary bottom-right bottom-right-flex" onClick="location.href='view?hotel={{ pkg.hotel_name }}'">Book</button>
+        <div class=" bottom-right bottom-right-flex">
+          <button type="button" class="btn btn-primary" onClick="location.href='view?hotel={{ pkg.hotel_name }}'">Book</button>
+        </div>
       </div>
     </div>
   </div>
