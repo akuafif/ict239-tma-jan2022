@@ -20,7 +20,7 @@ html templates:
 - login.html, login page
 - register.html, register page
 - viewallpackages.html, view all packages page and home page for all accounts
-- viewpackage.html, to view and book a package
+- booking.html, to view and book a package
 
 blueprints folder:
 - auth.py, routes for authentication related 
@@ -28,12 +28,13 @@ blueprints folder:
 
 models folder:
 - user.py, User model class
-- hotels.py, Hotel model class
+- staycation.py, staycation model class
 
 MongoDB:
 - Only User collection in MongoDB is used
 
 js assets:
+- booking,js, AJAX call for booking, to be used with booking.html
 - dtsel.js, datepicker js library
 - moment.js, date format js library
 
