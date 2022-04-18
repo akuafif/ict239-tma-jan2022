@@ -1,5 +1,11 @@
 // template/viewpackage.html
 
+
+function getDateObject(date){
+    var datearray = date.split("-");
+    return new Date(datearray[2]+'/'+datearray[1]+'/'+datearray[0]+' 00:00:00');
+}
+
 // datepicker objeect
 instance = new dtsel.DTS('input[name="checkindate"]',  {
 	dateFormat: "dd-mm-yyyy",}
@@ -11,13 +17,12 @@ $('button').click(function(){
 	document.getElementById("error").innerHTML = '';
 
 	var checkindate = document.getElementById('checkindate').value;
-	var datearray = checkindate.split("-");
 	var today = new Date();
 	today.setDate(today.getDate()-1); // comparing yesterday date
 	
 	// checkindate.match(/^(0?[1-9]|[12][0-9]|3[01])[\-](0?[1-9]|1[012])[\/\-]\d{4}$/)
 	// checks for date format with regex dd-mm-yyyy
-	// if (moment(checkindate, 'DD-MM-YYYY', true).isValid()  && (checkdate > today)){
+	// if (moment(checkindate, 'DD-MM-YYYY', true).isValid() && (getDateObject(checkdate) > today)){
 	if (moment(checkindate, 'DD-MM-YYYY', true).isValid()){
 		$.ajax({
 			type: 'POST',

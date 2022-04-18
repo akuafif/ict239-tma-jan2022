@@ -7,7 +7,7 @@ from werkzeug.utils import secure_filename
 from werkzeug.datastructures import FileStorage
 import pandas as pd
 from models.user import User
-from models.hotel import Hotel
+from models.staycation import Staycation
 from models.booking import Booking
 from datetime import datetime, timedelta
 
@@ -79,7 +79,7 @@ def up_staycation():
         if list(fdata.columns) == headers:
             for index, row in fdata.iterrows():
                 hotel_name,duration,unit_cost,image_url,description = list(row)
-                pa = Hotel(hotel_name=hotel_name,
+                pa = Staycation(hotel_name=hotel_name,
                         duration=duration,
                         unit_cost=unit_cost,
                         image_url=image_url,
@@ -109,7 +109,7 @@ def up_booking():
             for index, row in fdata.iterrows():
                 check_in_date,customer,hotel_name = list(row)
                 user_obj = User.objects(email=customer).first()
-                hotel_obj = Hotel.objects(hotel_name=hotel_name).first()
+                hotel_obj = Staycation.objects(hotel_name=hotel_name).first()
                 if user_obj and hotel_obj:
                     Booking(check_in_date=check_in_date,
                             customer=user_obj,
@@ -140,29 +140,44 @@ def generateIncomeInRange(data):
     toDate = datetime(year=int(y),month=int(m),day=int(d))
     gap = toDate - fromDate
 
+    isViewAll = bool(data['viewall'])
+
     # Create containers to pass to chart js
     date_labels = [] # x-axis
     hotel_label = [] # legend
     income_label = {} # legend x-axis
     income_dict = {} # legend y-axis
-    for h in Hotel.objects:
+    if isViewAll:
+        date_list = [fromDate + timedelta(days=x) for x in range(gap.days+1)]
+        date_labels = [d.strftime("%Y-%m-%d") for d in date_list]
+        for hotel in Staycation.objects: 
+            hotel_label.append(hotel.hotel_name)
+            income_dict[hotel.hotel_name] = [0 for d in date_list] # put 0 as default value
+            income_label[hotel.hotel_name] = [fromDate + timedelta(days=x) for x in range(gap.days+1)]
+            
+
+    for h in Staycation.objects:
         # Sort the bookings by date
         for book in Booking.objects(hotel_name=h.id).order_by('check_in_date'):
             if toDate >= book.check_in_date >= fromDate: 
                 date_str = book.check_in_date.strftime("%Y-%m-%d")
-                if not h.hotel_name in hotel_label:
-                    hotel_label.append(h.hotel_name)
-                    income_label[h.hotel_name] = []
-                    income_dict[h.hotel_name] = []
-                if date_str not in date_labels:
-                    date_labels.append(date_str)
-                if date_str not in income_label[h.hotel_name]:
-                    income_label[h.hotel_name].append(date_str)
-                    income_dict[h.hotel_name].append(h.unit_cost)
+                if isViewAll:
+                    date_index = date_list.index(book.check_in_date)
+                    income_dict[h.hotel_name][date_index] += h.unit_cost   
                 else:
-                    # add the income to existing date
-                    index = income_label[h.hotel_name].index(date_str)
-                    income_dict[h.hotel_name][index] += h.unit_cost
+                    if not h.hotel_name in hotel_label:
+                        hotel_label.append(h.hotel_name)
+                        income_label[h.hotel_name] = []
+                        income_dict[h.hotel_name] = []
+                    if date_str not in date_labels:
+                        date_labels.append(date_str)
+                    if date_str not in income_label[h.hotel_name]:
+                        income_label[h.hotel_name].append(date_str)
+                        income_dict[h.hotel_name].append(h.unit_cost)
+                    else:
+                        # add the income to existing date
+                        index = income_label[h.hotel_name].index(date_str)
+                        income_dict[h.hotel_name][index] += h.unit_cost
     date_labels.sort()
     return hotel_label, date_labels, income_dict, income_label, gap
     

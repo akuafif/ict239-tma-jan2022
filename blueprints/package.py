@@ -2,7 +2,7 @@ from flask import Blueprint, request, render_template
 from flask_login import login_required, current_user
 from datetime import datetime, timedelta
 from models.booking import Booking
-from models.hotel import Hotel
+from models.staycation import Staycation
 from models.user import User
 package = Blueprint('package', __name__)
 
@@ -10,17 +10,17 @@ package = Blueprint('package', __name__)
 @login_required
 def viewallpackages():
     # Home page of all authenticated users
-    return render_template('viewallpackages.html', hotel_list = Hotel.objects)
+    return render_template('viewallpackages.html', hotel_list = Staycation.objects)
 
 @package.route('/view', methods=['GET'])
 @login_required
 def viewpackage():
     # retrive the hotel name from url query string
     hotel_name = request.args.get("hotel")
-    selected_hotel = Hotel.objects(hotel_name=hotel_name).first()
+    selected_hotel = Staycation.objects(hotel_name=hotel_name).first()
     if selected_hotel is None:
-        selected_hotel = Hotel(hotel_name="Invalid Hotel",
-                               description="Invalid Hotel",
+        selected_hotel = Staycation(hotel_name="Invalid Staycation Package",
+                               description="Invalid Staycation Package",
                                image_url="https://fscene8.me/content/images/size/w1000/2022/04/question-mark-1019820_1280-1-.jpg")
     return render_template('booking.html', 
                             hotel_name=hotel_name, 
@@ -36,7 +36,7 @@ def addbooking():
 
     d,m,y = str(data['checkindate']).split('-')
     checkindate = datetime(year=int(y),month=int(m),day=int(d))
-    selected_hotel = Hotel.objects(hotel_name=hotel_name).first()
+    selected_hotel = Staycation.objects(hotel_name=hotel_name).first()
 
     if selected_hotel is None:
         return jsonify({'status' : 'ERROR',

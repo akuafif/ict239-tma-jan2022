@@ -54,7 +54,7 @@ function daysBetween(fromdate, todate){
 
 function getDateObject(date){
     var datearray = date.split("-");
-    return new Date(datearray[2]+'-'+datearray[1]+'-'+datearray[0]+' 00:00:00');
+    return new Date(datearray[2]+'/'+datearray[1]+'/'+datearray[0]+' 00:00:00');
 }
 
 function updateChart(date_labels, hotel_label, income_dict, income_label){
@@ -107,7 +107,8 @@ function ajaxUpdateChart(){
                 url: "/get_chart_data",
                 data: JSON.stringify({
                     "fromdate": document.getElementById('fromdate').value,
-                    "todate": document.getElementById('todate').value
+                    "todate": document.getElementById('todate').value,
+                    "viewall": document.getElementById('checkbox').checked
                 }),
                 error: function(e) {
                     document.getElementById("error").innerHTML = e;
