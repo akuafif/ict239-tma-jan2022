@@ -1,6 +1,5 @@
 // template/viewpackage.html
 
-
 function getDateObject(date){
     var datearray = date.split("-");
     return new Date(datearray[2]+'/'+datearray[1]+'/'+datearray[0]+' 00:00:00');
