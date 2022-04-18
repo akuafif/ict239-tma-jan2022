@@ -7,7 +7,7 @@ Please run the setup.sh
 # To run the flask app
 run start.sh
 
-Please register first with "admin@abc.com".
+Please register with "admin@abc.com" for admin access.
 
 
 
@@ -51,5 +51,8 @@ js assets:
 
 
 
-
-
+######################
+# Code are written in:
+- Debian 11 Bulleye (Proxmox LXC) 
+- vscode-server https://github.com/coder/code-server
+- MongoDB v5.0.6
