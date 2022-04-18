@@ -14,13 +14,27 @@ const data = {
     datasets: datasets
 };
 
+const chartOptions = {
+    maintainAspectRatio: false,
+    responsive: true,
+    tooltips: {
+        intersect: false,
+        callbacks: {
+            title: function() {}, /* hide title */
+            label: function(tooltipItem, data) {
+                // Get the correct data for the tooltip
+                const dataset = data.datasets[tooltipItem.datasetIndex];
+                const index = tooltipItem.index;
+                return dataset.data[index]['x'] + ': $' + dataset.data[index]['y'];
+            }
+        }
+    }
+};
+
 const config = {
     type: 'line',
     data: data,
-    options: {
-        responsive:true,
-        maintainAspectRatio: false
-    }
+    options: chartOptions
 };
 
 const myChart = new Chart(
@@ -61,10 +75,6 @@ function updateChart(date_labels, hotel_label, income_dict, income_label){
     // Update chart without reloading
     datasets = []
     for (let i = 0; i < hotel_label.length; i++) {
-        data_xy = [];
-        for (var j; j < income_dict[hotel_label[i]].length; j++){
-            data_xy.push({x: income_label[hotel_label[i]][j], y: income_dict[hotel_label[i]][j]});
-        }
         randcolor = 'rgb('+ getRndInteger(255) + ','+ getRndInteger(255)+','+getRndInteger(255)+')';
         datasets.push({ 
             label:hotel_label[i],

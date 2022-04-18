@@ -126,9 +126,8 @@ def chart():
         return render_template('dashboard.html')
     return redirect(url_for('auth.login')) 
    
-def generateIncomeInRange(data):
-    # To geneate a dictionary for the dataset    
-    # Generate a date object 
+def generateIncomeInRange(data):   
+    # Generate the date objects
     d,m,y = str(data['fromdate']).split('-')
     fromDate = datetime(year=int(y),month=int(m),day=int(d))
     d,m,y = str(data['todate']).split('-')
@@ -143,12 +142,13 @@ def generateIncomeInRange(data):
     income_label = {} # legend x-axis
     income_dict = {} # legend y-axis
     if isViewAll:
+        # Create labels for x-axis for all dictionary object
         date_list = [fromDate + timedelta(days=x) for x in range(gap.days+1)]
         date_labels = [d.strftime("%Y-%m-%d") for d in date_list]
         for hotel in Staycation.objects: 
             hotel_label.append(hotel.hotel_name)
             income_dict[hotel.hotel_name] = [0 for d in date_list] # put 0 as default value
-            income_label[hotel.hotel_name] = [fromDate + timedelta(days=x) for x in range(gap.days+1)]
+            income_label[hotel.hotel_name] = [(fromDate + timedelta(days=x)).strftime("%Y-%m-%d") for x in range(gap.days+1)]
             
 
     for h in Staycation.objects:
