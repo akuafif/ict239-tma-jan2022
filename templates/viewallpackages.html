@@ -3,7 +3,6 @@
 {% extends "base.html" %}
 {% block title %}Packages{% endblock %}
 {% block mainblock %}
-
 <!-- Need this for offset the sidebar -->
 <div class="row row-cols-1 row-cols-md-3 g-4 ml-auto">
   {% for pkg in hotel_list %}
@@ -16,7 +15,7 @@
       <div class="card-body">
         <h5 class="card-title">{{ pkg.hotel_name }}</h5>
         <p class="card-text">{{ pkg.description }}</p>
-        <div class=" bottom-right bottom-right-flex">
+        <div class="bottom-right bottom-right-flex">
           <button type="button" class="btn btn-primary" onClick="location.href='view?hotel={{ pkg.hotel_name }}'">Book</button>
         </div>
       </div>
