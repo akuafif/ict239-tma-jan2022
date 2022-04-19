@@ -1,18 +1,16 @@
-This is question 2 TMA
-I have written 2 bash scripts (setup.sh & start.sh) to automate the creation of venv for q2.
+# ICT239 TMA Jan 2022 Question 2
+I have written 2 bash scripts (`setup.sh` & `start.sh`) to automate the creation of venv for q2.
 
 # Setting up the enviroment
-Please run the setup.sh
+Run the `setup.sh` file.
 
 # To run the flask app
-run start.sh
+Run `start.sh` file.
 
-Please register with "admin@abc.com" for admin access.
+Please register with `admin@abc.com` for admin access.
 
 
-###############################
-# Q2 description
-# Notable Locations
+# Question 2 Notable Locations
 
 ## AJAX
 - File upload (assets/js/upload.js)
@@ -41,11 +39,11 @@ Please register with "admin@abc.com" for admin access.
 
 ## Cookies
 - Remember Me upon login/register (models.auth) (blueprints/auth.py)
-- COOKIE_TIME_OUT (__init__.py) 
+- COOKIE_TIME_OUT (`__init__.py`) 
 
 
-######################
-# Code are written in:
+
+# Software Used
 - Debian 11 Bulleye (Proxmox LXC) 
 - vscode-server https://github.com/coder/code-server
 - MongoDB v5.0.6
