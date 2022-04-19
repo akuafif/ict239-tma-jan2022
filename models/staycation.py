@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 
+# using dataclass to define objects with only data and very minimal functionalities
 @dataclass
 class Staycation():
     hotel_name : str

@@ -28,7 +28,6 @@ def login():
     if request.method == 'POST':
         if form.validate():
             check_user = User.get(form.email.data)
-            print(check_user)
             if check_user:
                 if form.password.data == check_user.password:
                     resp = make_response(redirect(url_for('package.viewallpackages')))

@@ -20,7 +20,7 @@ def load_staycation_csv():
                                 'unit_cost': lines[2],
                                 'image_url': lines[3],
                                 'description' : lines[4]} 
-        return tDict
+    return tDict
 
 def load_booking_csv():
     with open('assets/booking.csv', mode ='r')as file:
@@ -31,7 +31,7 @@ def load_booking_csv():
             # check_in_date,customer,hotel_name
             if lines[1] == current_user.email:
                 tList.append([lines[0], lines[1], lines[2]])
-        return tList
+    return tList
 
 def save_booking_csv(data):
     with open('assets/booking.csv', 'a+', newline='') as file:
@@ -84,8 +84,8 @@ def addbooking():
     
     if new_book in load_booking_csv():
         return jsonify({'status' : 'ERROR',
-                         'message': f'ERROR: You already have an existing booking at "{hotel_name}" on {data["checkindate"]}, under the name of {current_user.name}.'})
+                        'message': f'ERROR: You already have an existing booking at "{hotel_name}" on {data["checkindate"]}, under the name of {current_user.name}.'})
 
     save_booking_csv(new_book)
     return jsonify({'status' : 'OK',
-                        'message': f'Booking at "{hotel_name}" on {data["checkindate"]} for {current_user.name} was made.'})
+                    'message': f'Booking at "{hotel_name}" on {data["checkindate"]} for {current_user.name} was made.'})
