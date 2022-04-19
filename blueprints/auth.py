@@ -27,14 +27,15 @@ def login():
     rem = ""
     if request.method == 'POST':
         if form.validate():
-            check_user = User.objects(email=form.email.data).first()
+            check_user = User.get(form.email.data)
+            print(check_user)
             if check_user:
-                if check_password_hash(check_user['password'], form.password.data):
+                if form.password.data == check_user.password:
                     resp = make_response(redirect(url_for('package.viewallpackages')))
 
                     # Save details to cookies
                     if request.form.get('checkbox') is not None:
-                        resp.set_cookie('email', check_user['email'], max_age=COOKIE_TIME_OUT)
+                        resp.set_cookie('email', form.email.data, max_age=COOKIE_TIME_OUT)
                         resp.set_cookie('pwd',  sxor(form.password.data), max_age=COOKIE_TIME_OUT) 
                         resp.set_cookie('rem',  "checked", max_age=COOKIE_TIME_OUT)
                     else: 
@@ -60,15 +61,16 @@ def register():
     form = RegForm()
     if request.method == 'POST':
         if form.validate():
-            existing_user = User.objects(email=form.email.data).first()
+            existing_user = User.get(form.email.data)
             if existing_user is None:
-                hashpass = generate_password_hash(form.password.data, method='sha256')
-                new_user = User(email=form.email.data,password=hashpass,name=form.name.data).save()
+                # no hashing is done because saving to users.csv
+                new_user = User(email=form.email.data,password=form.password.data,name=form.name.data)
+                new_user.save()
 
                 resp = make_response(redirect(url_for('package.viewallpackages')))
                 # Save details to cookies
                 if request.form.get('checkbox') is not None:
-                    resp.set_cookie('email', new_user['email'], max_age=COOKIE_TIME_OUT)
+                    resp.set_cookie('email', new_user.email, max_age=COOKIE_TIME_OUT)
                     resp.set_cookie('pwd',  sxor(form.password.data), max_age=COOKIE_TIME_OUT)
                     resp.set_cookie('rem',  "checked", max_age=COOKIE_TIME_OUT)
                 else: 

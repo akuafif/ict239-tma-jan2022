@@ -1,7 +1,7 @@
 from flask_login import login_required, current_user
 import os
 from flask import render_template, request, redirect, send_from_directory
-from app import app, db, login_manager
+from app import app, login_manager
 
 from models.user import User
 from blueprints.auth import auth
@@ -12,7 +12,7 @@ app.register_blueprint(package)
 # Load the current user if any
 @login_manager.user_loader
 def load_user(user_id):
-    return User.objects(pk=user_id).first()
+    return User.get(user_id)
 
 @app.route("/favicon.ico")
 def favicon():

@@ -37,7 +37,7 @@
               {% endif %}
               <ul class="navbar-nav flex-column mt-4">
                 <!-- If Not authenticated -->
-                {% if current_user.is_anonymous %}
+                {% if not current_user.is_authenticated %}
                 <li class="nav-item"><a href="{{ url_for('auth.login') }}" class="nav-link text-white p-3 mb-2 sidebar-link"><i class="fas fa-home text-light fa-lg mr-3"></i>Login</a></li>
                 <li class="nav-item"><a href="{{ url_for('auth.register') }}" class="nav-link text-white p-3 mb-2 sidebar-link"><i class="fas fa-user text-light fa-lg mr-3"></i>Register</a></li>
                 {% endif %}

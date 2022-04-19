@@ -1,10 +1,9 @@
-from app import db
+from dataclasses import dataclass
 
-class Staycation(db.Document):
-    meta = {'collection': 'staycation'}
-    hotel_name = db.StringField()
-    duration = db.IntField()
-    unit_cost = db.IntField()
-    image_url = db.URLField()
-    description = db.StringField()
-    
+@dataclass
+class Staycation():
+    hotel_name : str
+    duration : int
+    unit_cost : int
+    image_url : str
+    description : str

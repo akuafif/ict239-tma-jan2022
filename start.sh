@@ -3,14 +3,6 @@
 green="\e[0;92m"
 reset="\e[0m"
 
-if [[ -d /opt/suss ]]
-then
-    echo ""
-    echo -e "${green}Running in SUSS vocareum VM... Starting Mongodb...${reset}"
-    echo "/opt/suss/mongodbfiles/manualMongo.sh >> /dev/null"
-    nohup /opt/suss/mongodbfiles/manualMongo.sh >> /dev/null &
-fi
-
 echo ""
 echo -e "${green}Entering virtual environment...${reset}"
 echo ". q1venv/bin/activate"

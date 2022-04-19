@@ -1,10 +1,13 @@
-This is question 1 TMA
+# This is question 1 TMA
 I have written 2 bash scripts (setup.sh & start.sh) to automate the creation of venv for q1.
 
-# Setting up the enviroment
+There is no MongoDB instance in q1.
+All data are stored and accessed with CSV files in the asset folder
+
+## Setting up the enviroment
 Please run the setup.sh
 
-# To run the flask app
+## To run the flask app
 run start.sh
 
 Please register with "admin@abc.com" for admin access.
@@ -13,7 +16,7 @@ Please register with "admin@abc.com" for admin access.
 
 
 ###############################
-# Q1 description
+## Q1 description
 html templates:
 - _render_field.html, Jinga marco
 - base.html, base layout
@@ -27,7 +30,7 @@ blueprints folder:
 - package.py, routes for package related
 
 models folder:
-- user.py, User model class
+- user.py, User model class without MongoDB
 - staycation.py, staycation model class
 
 MongoDB:
@@ -55,4 +58,3 @@ js assets:
 # Code are written in:
 - Debian 11 Bulleye (Proxmox LXC) 
 - vscode-server https://github.com/coder/code-server
-- MongoDB v5.0.6
